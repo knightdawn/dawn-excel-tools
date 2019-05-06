@@ -1,0 +1,12 @@
+---
+name: rule0
+when: 
+    val.b == ''
+then:
+  - "b不能为空"
+---
+name: rule1
+when: 
+    val.c != '派件'
+then:
+  - "c只能为派件"

@@ -1,0 +1,11 @@
+name: 1
+when: |
+  !array.contains(val.a);
+then: 
+- error.msg = "a不在对应类型中"
+---
+name: 2
+when: 
+  "!array.contains(val.a);"
+then: 
+- error.msg = "a不在对应类型中"

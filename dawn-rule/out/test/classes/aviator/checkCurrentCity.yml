@@ -1,0 +1,4 @@
+when: 
+	val.a != currentCity
+then:
+  - "a与当前选择城市不一致"

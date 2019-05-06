@@ -1,0 +1,24 @@
+---
+name: rule0
+when: 
+    val.a == null
+then:
+  - error.msg = "a不能为空"
+---
+name: rule1
+when: 
+    val.a != 1 && val.a != 2
+then:
+  - error.msg = "a只能为1或2"
+---
+name: rule2
+when: 
+    val.a == 1 && val.b == null
+then:
+  - error.msg = "b不能为空"
+---
+name: rule3
+when: 
+    val.a == 2 && val.c == null
+then:
+  - error.msg = "c不能为空"

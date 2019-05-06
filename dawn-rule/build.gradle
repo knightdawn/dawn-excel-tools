@@ -1,0 +1,87 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+allprojects{
+	apply plugin: 'maven'
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	
+	[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+	
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+	
+	configurations.all {
+	    resolutionStrategy {
+	    	cacheChangingModulesFor 0, 'seconds'
+	    	cacheDynamicVersionsFor 0, 'seconds'
+	    }
+	}
+	
+	repositories {
+        maven { url property('mavenUrl') }
+        mavenCentral()
+    }
+    
+    uploadArchives.repositories.mavenDeployer {
+        repository(url: property('releaseUploadUrl')) {
+            authentication(userName: property('releaseUploadUserName'), password: property('releaseUploadPassword'))
+        }
+        snapshotRepository(url: property('snapshotUploadUrl')) {
+            authentication(userName: property('snapshotUploadUserName'), password: property('snapshotUploadPassword'))
+        }
+    }
+	
+	configurations {
+	    provided
+	}
+	
+	sourceSets {
+	    main.compileClasspath += configurations.provided
+	    test.compileClasspath += configurations.provided
+	    test.runtimeClasspath += configurations.provided
+	}
+	eclipse.classpath.plusConfigurations += [ configurations.provided ]
+	
+	dependencies {
+	   compile project(":dawn-core")
+           compile('org.slf4j:slf4j-api:1.7.7')
+	   compile('junit:junit:4.4')
+	   compile('org.yaml:snakeyaml:1.18')
+	   compile('org.mvel:mvel2:2.4.0.Final')
+	   compile('com.googlecode.aviator:aviator:4.1.1')
+
+	   // junit用到（打包去掉）
+	   compile('com.fasterxml.jackson.core:jackson-annotations:2.6.0')
+	   compile('com.fasterxml.jackson.core:jackson-core:2.6.1')
+	   compile('com.fasterxml.jackson.core:jackson-databind:2.6.1')
+	   compile('org.assertj:assertj-core:2.9.0')
+	   
+	   // 本地测试用（打包去掉）
+	   compile('ch.qos.logback:logback-classic:1.1.2')
+       compile('ch.qos.logback:logback-core:1.1.2')
+	}
+	
+	group = 'com.sf.dawn'
+	version =  '1.0.1'
+	jar {
+		baseName = project.name
+	    manifest {
+	    	attributes 'Implementation-Title': 'Dawn Rule Engine Project', 'Implementation-Version': version
+			attributes 'Main-Class': 'com.sf.dawn.rule.main.Main'
+	    }
+	}	
+	
+	task initSourceFolders {
+	    sourceSets*.java.srcDirs*.each { it.mkdirs() }
+	    sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+	}
+	
+	task wrapper(type: Wrapper) {
+        gradleVersion = '4.0.2'
+    }
+
+}

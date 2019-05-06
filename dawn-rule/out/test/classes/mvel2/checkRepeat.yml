@@ -1,0 +1,15 @@
+when: 
+    list = val.a.split(",");
+    map = ["1":""];
+    flag = 0;
+    for (int i = 0; i < list.length; i++) {
+        key = list[i];
+        if (map[key] == null) {
+           map[key] = key;
+        } else {
+          flag = 1;
+        }
+    }
+    flag != 0;
+then: 
+- error.msg = "a中存在重复编码"

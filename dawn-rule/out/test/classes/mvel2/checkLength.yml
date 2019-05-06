@@ -1,0 +1,12 @@
+---
+name: rule1
+when: 
+    val.a.length > 10
+then:
+  - error.msg = "a长度不能超过10"
+---
+name: rule2
+when: 
+    val.c.length > 5
+then:
+  - error.msg = "c长度不能超过5"

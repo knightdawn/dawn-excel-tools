@@ -1,0 +1,36 @@
+---
+name: 运单号
+when: 
+    val.waybillNo == nil || val.waybillNo == ''
+then:
+  - "运单号不能为空"
+---
+name: 重量
+when: 
+    val.pieceWeight == nil || val.pieceWeight == ''
+then:
+  - "重量不能为空"
+---
+name: 集/散
+when: 
+    val.storeOrBulk == nil || val.storeOrBulk == ''
+then:
+  - "集/散不能为空"
+---
+name: 可发车/装车时间
+when: 
+    val.availableTime == nil || val.availableTime == ''
+then:
+  - "可发车/装车时间不能为空"
+---
+name: 始发不可全为空
+when:
+    val.srcDeptCode == '' && val.srcUnitArea == '' && val.srcCityCode == '' && val.srcAreaCode == ''
+then:
+- "始发信息[始发地网点代码、始发地单元区域代码、始发地城市代码、始发地区部代码]不可全为空"
+---
+name: 目的不可全为空
+when:
+  val.destDeptCode == '' && val.destUnitArea == '' && val.destCityCode == '' && val.destAreaCode == '' && val.transitDepotOrDeptCode == ''
+then:
+- "目的信息[目的地网点代码、目的地单元区域代码、目的地城市代码、目的地区部代码、散货中转场/网点代码]不可全为空"

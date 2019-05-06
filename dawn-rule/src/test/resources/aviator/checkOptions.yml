@@ -1,0 +1,6 @@
+# 选项 list 匹配测试
+when: 
+    list = [1, 2, 3];
+    !(include(list, val.a));
+then:
+  - "a只能是1、2、3"

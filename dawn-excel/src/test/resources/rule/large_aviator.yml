@@ -1,0 +1,61 @@
+---
+name: 运单号
+when: 
+    val.waybill == nil || val.waybill == ''
+then:
+  - "运单号不能为空"
+---
+name: 始发地代码
+when: 
+    val.start == nil || val.start == ''
+then:
+  - "始发地代码不能为空"
+---
+name: 目的地代码
+when: 
+    val.end == nil || val.end == ''
+then:
+  - "目的地代码不能为空"
+---
+name: 可发车/装车时间
+when: 
+    val.tm == nil || val.tm == ''
+then:
+  - "可发车/装车时间不能为空"
+---
+name: 集/散
+when: 
+    val.type == nil || val.type == ''
+then:
+  - "集/散不能为空"
+---
+name: 重量
+when: 
+    val.weight == nil || val.weight == ''
+then:
+  - "重量不能为空"
+---
+name: 产品类型
+when: 
+    val.business == nil || val.business == ''
+then:
+  - "产品类型不能为空"
+---
+name: 日期
+when: 
+    val.date == nil || val.date == ''
+then:
+  - "日期不能为空"
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

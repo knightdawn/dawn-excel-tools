@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="300 seconds" debug="false">
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+    <property name="LOG_HOME" value="./logs" />
+
+    <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+    <!--参考ch.qos.logback.classic.PatternLayout -->
+    <!--  property name="LOG_FORMAT" value="%d{MM-dd HH:mm:ss.SSS} [%thread] %-5level %class.%method\\(%F:%L\\) - %msg%n" / -->
+    <property name="LOG_FORMAT" value="%d{MM-dd HH:mm:ss.SSS}|%-5level|%thread| %c{1}.%method\\(%F:%L\\)|%msg%n" />
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 日志输出编码 -->
+        <encoder charset="UTF-8" >
+            <pattern>${LOG_FORMAT}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 按照每天生成日志文件 -->
+    <appender name="DAILYFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder charset="UTF-8">
+            <pattern>${LOG_FORMAT}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <fileNamePattern>${LOG_HOME}/lss_oms_dms_calc_%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!--日志文件最大的大小 单位 kb  mb gb-->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 最多保存的历史天数 -->
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <appender name="DAILYFILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志级别过滤：增加filter子标签，实现按日志输出级别进行日志文件 ThresholdFilter -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder charset="UTF-8">
+            <pattern>${LOG_FORMAT}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <fileNamePattern>${LOG_HOME}/lss_oms_dms_calc_%d{yyyyMMdd}_ERROR.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!--日志文件最大的大小 单位 kb  mb gb-->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!-- 最多保存的历史天数 -->
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+    </appender>s
+    
+    <!-- 日志输出级别 -->
+    <!-- OFF, ERROR, WARN, INFO, DEBUG, TRACE, ALL. -->
+    <root level="INFO"><!-- 开发调试level设置为debug，生产设置为info -->
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="DAILYFILE" />
+        <appender-ref ref="DAILYFILE_ERROR" />
+    </root>
+
+</configuration>

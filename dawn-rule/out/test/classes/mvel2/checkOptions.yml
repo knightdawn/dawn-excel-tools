@@ -1,0 +1,6 @@
+# 选项 list 匹配测试
+when: 
+    list = [1, 2, 3];
+    !(list contains val.a);        # !list.contains(val.a)
+then:
+  - error.msg = "a只能是1、2、3"

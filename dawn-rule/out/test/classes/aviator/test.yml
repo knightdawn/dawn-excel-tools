@@ -1,0 +1,12 @@
+---
+name: rule1
+when: 
+    val.a == '1' && val.b == nil
+then:
+  - "b不能为空"
+---
+name: rule2
+when: 
+    val.a == '2' && val.c == nil
+then:
+  - "c不能为空"

@@ -1,0 +1,12 @@
+---
+name: rule1
+when: 
+    string.length(val.a) > 10
+then:
+  - "a长度不能超过10"
+---
+name: rule2
+when: 
+    string.length(val.c) > 5
+then:
+  - "c长度不能超过5"

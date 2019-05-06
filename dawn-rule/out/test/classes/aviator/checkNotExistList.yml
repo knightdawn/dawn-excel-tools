@@ -1,0 +1,5 @@
+name: 1
+when: 
+   (!include(array, val.a))
+then: 
+- "a不在对应类型中"
